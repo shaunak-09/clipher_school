@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/users');
 const bcrypt=require("bcryptjs")
+const CryptoJS=require("crypto-js")
 
 module.exports.getprofile= async (req, res) => {
   try {
@@ -52,9 +53,13 @@ module.exports.updateprofile=async (req, res) => {
 }
 
     if (req.body.password != null) {
-        const salt = await bcrypt.genSalt();
-        const hashedPassword = await bcrypt.hash(req.body.password, salt); 
-      user.password = hashedPassword
+      const secretPass="Clipherschool"
+    
+      const data = CryptoJS.AES.encrypt(
+        JSON.stringify(req.body.password),
+        secretPass
+      ).toString();
+      user.password =data
     
     }
     console.log();

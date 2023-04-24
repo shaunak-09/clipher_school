@@ -8,19 +8,23 @@ function App() {
   const toggleLoginModal = () => {
     setLoginsignup(!loginsignup);
   };
+  const [logstat, setLogstat] = useState()
   useEffect(()=>{
-    if(localStorage.getItem("logstat")==null)
-    localStorage.setItem("logstat",0)
+    if(sessionStorage.getItem("logstat")==null)
+   {sessionStorage.setItem("logstat",0)
+    setLogstat(0)
+  }
+  else setLogstat(sessionStorage.getItem("logstat"))
   },[])
   
   
   return (
     <div className="App">
       
-     <Landingpage setloginsignup={toggleLoginModal}/> 
+     <Landingpage setloginsignup={toggleLoginModal} logstat={logstat} setLogstat={setLogstat}/> 
 
      {
-      loginsignup && <Modal setOpenModal={toggleLoginModal}/>
+      loginsignup && <Modal setOpenModal={toggleLoginModal} logstat={logstat} setLogstat={setLogstat}/>
      }
     </div>
   );

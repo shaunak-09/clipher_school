@@ -4,8 +4,7 @@ import * as Yup from "yup";
 import "./SignUp.css";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-const axios = require("axios");
+import axios from "axios";
 
 const SignUp = (props) => {
   
@@ -45,18 +44,24 @@ const SignUp = (props) => {
           username: values.name,
           email: values.email,
           password: values.password,
-          mobile: values.mobile,
+          mobile: values.mobile
       }
-      axios.post("http://localhost:5000/api/signup/",req)
+      axios.post("http://localhost:5000/api/signup/", {
+        username: values.name,
+        email: values.email,
+        password: values.password,
+        mobile: values.mobile
+    })
       .then((res)=>{
          localStorage.setItem("user_info",JSON.stringify(res.data))
          sessionStorage.setItem("logstat",1)
+         props.setLogstat(1)
          toast.success("Successfully Signed up ")
          props.setOpenModal(false)
       })
       .catch((err)=>{
            console.log(err);
-           toast.error(JSON.stringify(err))
+           toast.error(JSON.stringify(err.response.data))
            props.setOpenModal(false)
       })
   },

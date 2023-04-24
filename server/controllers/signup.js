@@ -2,21 +2,29 @@ const User = require("../models/users")
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'clipher';
-const bcrypt=require("bcryptjs")
+// const bcrypt=require("bcryptjs")
+const CryptoJS=require("crypto-js")
 
 
 const signup= async (req, res) => {
     const { username, password, email,mobile } = req.body;
-   
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(password, salt);
-    // const user1 = User.find({email:email})
+   const secretPass="Clipherschool"
+    // const salt = await bcrypt.genSalt();
+    // const hashedPassword = await bcrypt.hash(password, salt);
+    const data = CryptoJS.AES.encrypt(
+      JSON.stringify(password),
+      secretPass
+    ).toString();
+    // console.log(data);
+    // const user1= await User.findOne({_id:"64454ca3707f5768496c8f6c"});
+    
+     const user1= await User.findOne({email:email})
     // console.log(user1);
-    // if(user1.length!=0) res.status(400).json("Email already exists")
-    // else{
+    if(user1) res.status(400).json("Email already exists")
+    else{
       const user = new User({ 
         username,
-        password: hashedPassword, 
+        password: data, 
         email,
         about:"",
         mobile,
@@ -37,6 +45,6 @@ res.status(500).json('Error signing up');
     }
     
     
-  // };
+  };
 
   module.exports=signup;

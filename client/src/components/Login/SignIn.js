@@ -29,6 +29,7 @@ function SignIn (props) {
      }).then((res)=>{
       // console.log(res);
       sessionStorage.setItem("logstat",1)
+      props.setLogstat(1)
         localStorage.setItem("user_info",JSON.stringify(res.data));
         
        
@@ -39,9 +40,9 @@ function SignIn (props) {
 
      })
      .catch((err)=>{
-          console.log(err.response.data);
+          console.log(err);
           
-          toast.error("Invalid credentials")
+          toast.error(err.response.data)
           props.setOpenModal(false);
           
      })

@@ -16,7 +16,7 @@ function Modal (props){
   }
   const Modal =() =>{
     if(active === "signin"){
-      return <div id='signinm'><SignIn  setOpenModal={props.setOpenModal}/>
+      return <div id='signinm'><SignIn  setOpenModal={props.setOpenModal} setLogstat={props.setLogstat}/>
               
               <h4>Don't have an account? <span onClick={()=>{setActive("signup")}}>Sign Up</span></h4>
               <h4 id="fp" onClick={()=>{setActive("forgot1")}}>Forgot Password?</h4>
@@ -24,7 +24,7 @@ function Modal (props){
     }
     else if(active === "signup"){
       return <div id="signupm">
-              <SignUp  setOpenModal={props.setOpenModal}/>
+              <SignUp  setOpenModal={props.setOpenModal} setLogstat={props.setLogstat}/>
     
                 <h4>Already have an account? <span onClick={()=>{setActive("signin")}}> Sign In</span></h4>
                 <br/>
